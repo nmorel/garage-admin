@@ -1,8 +1,11 @@
-angular.module('app', ['ngAnimate', 'ui.router', 'ui.bootstrap', 'toaster'])
-  .config(function ($stateProvider, $urlRouterProvider) {
+angular.module('app', ['ngAnimate', 'ngMessages', 'ui.router', 'ui.bootstrap', 'toaster', 'ngTagsInput'])
+  .config(function ($stateProvider, $urlRouterProvider, $uiViewScrollProvider) {
     //
     // For any unmatched url, redirect to /state1
     $urlRouterProvider.otherwise('/');
+
+    // Using autoscroll to scroll to top when the view changes
+    $uiViewScrollProvider.useAnchorScroll();
 
     //
     // Now set up the states
@@ -13,16 +16,8 @@ angular.module('app', ['ngAnimate', 'ui.router', 'ui.bootstrap', 'toaster'])
         controller: 'ListController',
         controllerAs: 'vm',
         resolve: {
-          cars: function ($q, $http) {
-            var deferred = $q.defer();
-
-            $http.get('/api/cars').success(function (cars) {
-              return deferred.resolve(cars);
-            }).error(function (err) {
-              return deferred.reject(err);
-            });
-
-            return deferred.promise;
+          cars: function (restService) {
+            return restService.get('/api/cars');
           },
         },
       })
@@ -31,11 +26,21 @@ angular.module('app', ['ngAnimate', 'ui.router', 'ui.bootstrap', 'toaster'])
         templateUrl: 'edit/edit.html',
         controller: 'EditController',
         controllerAs: 'vm',
+        resolve: {
+          car: function () {
+            return {};
+          },
+        },
       })
       .state('edit', {
         url: '/:id',
         templateUrl: 'edit/edit.html',
         controller: 'EditController',
         controllerAs: 'vm',
+        resolve: {
+          car: function (restService, $stateParams) {
+            return restService.get('/api/cars/' + $stateParams.id);
+          },
+        },
       });
   });

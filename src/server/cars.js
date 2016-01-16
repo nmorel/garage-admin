@@ -88,7 +88,7 @@ app.post('/api/cars', (req, res, next) => {
       };
       return fs.writeFileAsync(carsNextId, jsToString(nextId));
     })
-    .then(() => res.sendStatus(200))
+    .then(() => res.json(car))
     .catch(next);
 });
 

@@ -19,6 +19,7 @@
         .error(function(){
           toaster.pop('error', 'Erreur', 'Une erreur est survenue durant la récupération des voitures');
         });
+        toaster.pop('success', 'Suppression effectuée');
       }).error(function () {
         toaster.pop('error', 'Erreur', 'Une erreur est survenue durant la suppression de la voiture');
       });
