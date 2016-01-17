@@ -1,11 +1,8 @@
-angular.module('app', ['ngAnimate', 'ngMessages', 'ui.router', 'ui.bootstrap', 'toaster', 'ngTagsInput'])
-  .config(function ($stateProvider, $urlRouterProvider, $uiViewScrollProvider) {
+angular.module('app', ['ngAnimate', 'ngMessages', 'ui.router', 'ui.bootstrap', 'toaster', 'ngTagsInput', 'ngFileUpload', 'dndLists'])
+  .config(function ($stateProvider, $urlRouterProvider) {
     //
     // For any unmatched url, redirect to /state1
     $urlRouterProvider.otherwise('/');
-
-    // Using autoscroll to scroll to top when the view changes
-    $uiViewScrollProvider.useAnchorScroll();
 
     //
     // Now set up the states

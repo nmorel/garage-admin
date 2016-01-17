@@ -1,9 +1,14 @@
 const app = require('./app.js');
 const conf = require('./conf.js');
 const path = require('path');
+const _ = require('lodash');
+const uuid = require('node-uuid');
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const rmdir = Promise.promisify(require('rimraf'));
+const imagemagick = require('imagemagick-native');
 
 const carsFolder = path.join(conf.frontendFolder, '/src/data/cars');
 const carsIndex = path.join(carsFolder, 'index.js');
@@ -52,6 +57,35 @@ function updateIndex(skipCar) {
 }
 
 /**
+ * Retrieves a car with the given id
+ * @param id the car's id
+ * @returns {Promise} Returns the car
+ */
+function getCar(id) {
+  return fs.readFileAsync(path.join(carsFolder, id, 'data.json'))
+    .then(JSON.parse);
+}
+
+/**
+ * Converts a photo
+ * @param data the buffer containing the photo
+ * @param file the destination file
+ * @param size the maximum width and height of the photo
+ * @returns {Promise}
+ */
+function convertPhoto(data, file, size) {
+  return fs.writeFileAsync(path.join(conf.frontendFolder, 'src', file),
+    imagemagick.convert({
+      srcData: data,
+      format: 'JPG',
+      quality: 90,
+      width: size,
+      height: size,
+      resizeStyle: 'aspectfit',
+    }));
+}
+
+/**
  * Returns all the cars
  */
 app.get('/api/cars', (req, res, next) => {
@@ -67,8 +101,7 @@ app.get('/api/cars', (req, res, next) => {
  * Returns the car with the id given in parameter
  */
 app.get('/api/cars/:id', (req, res, next) => {
-  fs.readFileAsync(path.join(carsFolder, req.params.id, 'data.json'))
-    .then(JSON.parse)
+  getCar(req.params.id)
     .then(result => res.json(result))
     .catch(next);
 });
@@ -115,6 +148,72 @@ app.delete('/api/cars/:id', (req, res, next) => {
     .then(() => {
       // Removes the folder and everything it contains
       return rmdir(path.join(carsFolder, req.params.id));
+    })
+    .then(() => res.sendStatus(200))
+    .catch(next);
+});
+
+/**
+ * Adds photos to a car
+ */
+app.post('/api/cars/:id/photos', multipartMiddleware, (req, res, next) => {
+  if (!req.files.file || !req.files.file.length) {
+    res.sendStatus(200);
+    return;
+  }
+
+  // For each photo, we create 3 versions (small, medium and large) and return the object containing the id and urls
+  Promise.map(req.files.file,
+    file => {
+      const fileId = uuid.v4();
+      const photoFolder = path.join(carsFolder, req.params.id, fileId);
+      const result = {
+        id: fileId,
+        name: file.originalFilename,
+        small: path.join('data/cars', req.params.id, fileId, fileId + '_small.jpg'),
+        medium: path.join('data/cars', req.params.id, fileId, fileId + '_medium.jpg'),
+        large: path.join('data/cars', req.params.id, fileId, fileId + '_large.jpg'),
+      };
+
+      return fs.mkdirAsync(photoFolder)
+        .then(() => fs.readFileAsync(file.path))
+        .then((data) => {
+          const small = convertPhoto(data, result.small, 150);
+          const medium = convertPhoto(data, result.medium, 350);
+          const large = convertPhoto(data, result.large, 800);
+          return Promise.all([small, medium, large]);
+        })
+        .
+        then(() => fs.unlinkAsync(file.path))
+        .then(() => result);
+    })
+
+    // Now, we add the photos to the car
+    .then((data) => {
+      return getCar(req.params.id)
+        .then(car => {
+          if (!car.photos) {
+            car.photos = data;
+          } else {
+            car.photos = _.concat(car.photos, data);
+          }
+
+          return saveCar(car);
+        });
+    })
+    .then(() => res.sendStatus(200))
+    .catch(next);
+});
+
+/**
+ * Deletes a photo from a car
+ */
+app.delete('/api/cars/:id/photos/:idPhoto', (req, res, next) => {
+  rmdir(path.join(carsFolder, req.params.id, req.params.idPhoto))
+    .then(() => getCar(req.params.id))
+    .then(car => {
+      _.remove(car.photos, photo => photo.id === req.params.idPhoto);
+      return saveCar(car);
     })
     .then(() => res.sendStatus(200))
     .catch(next);

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function EditController($scope, car, $state, $timeout, restService, toaster) {
+  function EditController($scope, car, $state, $timeout, restService, toaster, Upload) {
     var vm = this;
     vm.car = car;
 
@@ -37,7 +37,7 @@
       if (angular.isUndefined(modelValue)) {
         return modelValue;
       }
-      return modelValue.map(function(val) {
+      return modelValue.map(function (val) {
         return {
           text: val
         };
@@ -52,10 +52,8 @@
             restService.put('/api/cars/' + vm.car.id, car)
               .then(function () {
                 toaster.pop('success', 'Modifications sauvegardées');
-                $state.go($state.current, {}, {
-                  reload: true,
-                });
-              }, function (err) {
+                refreshCar();
+              }, function () {
                 toaster.pop('error', 'Erreur', 'Une erreur est survenue durant la modification');
               });
           } else {
@@ -63,7 +61,7 @@
               .then(function (_car) {
                 toaster.pop('success', 'Voiture ajoutée');
                 $state.go('edit', {id: _car.id});
-              }, function (err) {
+              }, function () {
                 toaster.pop('error', 'Erreur', 'Une erreur est survenue durant la création');
               });
           }
@@ -76,6 +74,63 @@
         reload: true,
       });
     };
+
+    vm.deletePhoto = function (photo) {
+      if (vm.uploading) {
+        return;
+      }
+
+      restService.delete('/api/cars/' + vm.car.id + '/photos/' + photo.id)
+        .then(function () {
+          toaster.pop('success', 'Photo supprimée');
+          _.remove(vm.car.photos, function (_photo) {
+            return photo.id === _photo.id;
+          });
+        }, function () {
+          toaster.pop('error', 'Erreur', 'Une erreur est survenue durant la suppression de la photo');
+        });
+    };
+
+    vm.addPhotos = function (photos) {
+      vm.uploading = true;
+      vm.progress = 0;
+      Upload.upload({
+          url: '/api/cars/' + vm.car.id + '/photos/',
+          data: {
+            file: photos,
+          },
+        })
+        .then(function () {
+          toaster.pop('success', 'Photos ajoutées');
+          refreshCar();
+        }, function () {
+          toaster.pop('error', 'Erreur', 'Une erreur est survenue durant l\'upload des photos');
+        }, function (evt) {
+          vm.progress = parseInt(100.0 * evt.loaded / evt.total, 10);
+        })
+        .finally(function () {
+          vm.uploading = false;
+          delete vm.progress;
+        });
+    };
+
+    vm.onDropPhoto = function ($index) {
+      vm.car.photos.splice($index, 1);
+      restService.put('/api/cars/' + vm.car.id, car)
+        .then(function () {
+          toaster.pop('success', 'Modifications sauvegardées');
+          refreshCar();
+        }, function () {
+          toaster.pop('error', 'Erreur', 'Une erreur est survenue durant la modification');
+        });
+    };
+
+    function refreshCar() {
+      $state.go($state.current, {}, {
+        reload: true,
+      });
+    }
+
   }
 
   angular.module('app')

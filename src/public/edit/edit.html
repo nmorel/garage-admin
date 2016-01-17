@@ -1,105 +1,145 @@
-<a ui-sref="list"><span class="glyphicon glyphicon-log-out"></span> Retourner à la liste</a>
+<div style="margin-bottom: 5px;">
+  <a ui-sref="list"><span class="glyphicon glyphicon-log-out"></span> Retourner à la liste</a>
+</div>
 
-<h1 style="margin: 10px 0">{{ vm.car.id ? vm.car.make + ' - ' + vm.car.model : 'Nouvelle voiture' }}</h1>
-
-<form name="vm.form" novalidate>
-
-  <div class="row">
-    <div class="form-group col-xs-4" show-errors>
-      <label for="make" class="control-label required">Marque</label>
-      <input type="text" class="form-control" id="make" name="make" ng-model="vm.car.make"
-             required/>
-      <p ng-messages="vm.form.make.$error" class="help-block">
-        <span ng-message="required">Champ obligatoire</span>
-      </p>
-    </div>
-
-    <div class="form-group col-xs-4" show-errors>
-      <label for="model" class="control-label required">Modèle</label>
-      <input type="text" class="form-control" id="model" name="model" ng-model="vm.car.model"
-             required/>
-      <p ng-messages="vm.form.model.$error" class="help-block">
-        <span ng-message="required">Champ obligatoire</span>
-      </p>
-    </div>
-
-    <div class="form-group col-xs-4" show-errors>
-      <label for="year" class="control-label required">Année</label>
-      <input type="number" class="form-control" id="year" name="year" ng-model="vm.car.year"
-             required min="1900" max="2100"/>
-      <p ng-messages="vm.form.year.$error" class="help-block">
-        <span ng-message="required">Champ obligatoire</span>
-        <span ng-message="min">L'année doit être comprise entre 1900 et 2100</span>
-        <span ng-message="max">L'année doit être comprise entre 1900 et 2100</span>
-      </p>
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>{{ vm.car.id ? vm.car.make + ' - ' + vm.car.model : 'Nouvelle voiture' }}</h2>
   </div>
+  <div class="panel-body">
+    <form name="vm.form" novalidate>
 
-  <div class="row">
-    <div class="form-group col-xs-4" show-errors>
-      <label for="mileage" class="control-label required">Kilométrage</label>
-      <input type="number" class="form-control" id="mileage" name="mileage" ng-model="vm.car.mileage"
-             required/>
-      <p ng-messages="vm.form.mileage.$error" class="help-block">
-        <span ng-message="required">Champ obligatoire</span>
-      </p>
-    </div>
+      <div class="row">
+        <div class="form-group col-xs-4" show-errors>
+          <label for="make" class="control-label required">Marque</label>
+          <input type="text" class="form-control" id="make" name="make" ng-model="vm.car.make"
+                 required/>
+          <p ng-messages="vm.form.make.$error" class="help-block">
+            <span ng-message="required">Champ obligatoire</span>
+          </p>
+        </div>
 
-    <div class="form-group col-xs-4" show-errors>
-      <label for="transmission" class="control-label required">Transmission</label>
-      <select class="form-control" id="transmission" name="transmission" ng-model="vm.car.transmission"
-              ng-options="tr for tr in vm.transmissions" required></select>
-      <p ng-messages="vm.form.transmission.$error" class="help-block">
-        <span ng-message="required">Champ obligatoire</span>
-      </p>
-    </div>
+        <div class="form-group col-xs-4" show-errors>
+          <label for="model" class="control-label required">Modèle</label>
+          <input type="text" class="form-control" id="model" name="model" ng-model="vm.car.model"
+                 required/>
+          <p ng-messages="vm.form.model.$error" class="help-block">
+            <span ng-message="required">Champ obligatoire</span>
+          </p>
+        </div>
 
-    <div class="form-group col-xs-4" show-errors>
-      <label for="fuelType" class="control-label required">Type d'essence</label>
-      <select class="form-control" id="fuelType" name="fuelType" ng-model="vm.car.fuelType"
-              ng-options="fl for fl in vm.fuelTypes" required></select>
-      <p ng-messages="vm.form.fuelType.$error" class="help-block">
-        <span ng-message="required">Champ obligatoire</span>
-      </p>
-    </div>
-  </div>
+        <div class="form-group col-xs-4" show-errors>
+          <label for="year" class="control-label required">Année</label>
+          <input type="number" class="form-control" id="year" name="year" ng-model="vm.car.year"
+                 required min="1900" max="2100"/>
+          <p ng-messages="vm.form.year.$error" class="help-block">
+            <span ng-message="required">Champ obligatoire</span>
+            <span ng-message="min">L'année doit être comprise entre 1900 et 2100</span>
+            <span ng-message="max">L'année doit être comprise entre 1900 et 2100</span>
+          </p>
+        </div>
+      </div>
 
-  <div class="row">
-    <div class="form-group col-xs-4" show-errors>
-      <label for="power" class="control-label required">Puissance</label>
-      <input type="text" class="form-control" id="power" name="power" ng-model="vm.car.power"
-             required/>
-      <p ng-messages="vm.form.power.$error" class="help-block">
-        <span ng-message="required">Champ obligatoire</span>
-      </p>
-    </div>
+      <div class="row">
+        <div class="form-group col-xs-4" show-errors>
+          <label for="mileage" class="control-label required">Kilométrage</label>
+          <input type="number" class="form-control" id="mileage" name="mileage" ng-model="vm.car.mileage"
+                 required/>
+          <p ng-messages="vm.form.mileage.$error" class="help-block">
+            <span ng-message="required">Champ obligatoire</span>
+          </p>
+        </div>
 
-    <div class="form-group col-xs-8">
-      <label for="options" class="control-label">Options</label>
-      <tags-input id="options" name="options" ng-model="vm.car.options"
-                  placeholder="Ajouter une option" replace-spaces-with-dashes="false"
-                  ng-model-parser="vm.parseTags" ng-model-formatter="vm.formatTags">
-      </tags-input>
-    </div>
-  </div>
+        <div class="form-group col-xs-4" show-errors>
+          <label for="transmission" class="control-label required">Transmission</label>
+          <select class="form-control" id="transmission" name="transmission" ng-model="vm.car.transmission"
+                  ng-options="tr for tr in vm.transmissions" required></select>
+          <p ng-messages="vm.form.transmission.$error" class="help-block">
+            <span ng-message="required">Champ obligatoire</span>
+          </p>
+        </div>
 
-  <div class="row">
-    <div class="form-group col-xs-12">
-      <label for="observations" class="control-label">Observations</label>
+        <div class="form-group col-xs-4" show-errors>
+          <label for="fuelType" class="control-label required">Type d'essence</label>
+          <select class="form-control" id="fuelType" name="fuelType" ng-model="vm.car.fuelType"
+                  ng-options="fl for fl in vm.fuelTypes" required></select>
+          <p ng-messages="vm.form.fuelType.$error" class="help-block">
+            <span ng-message="required">Champ obligatoire</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-xs-4" show-errors>
+          <label for="power" class="control-label required">Puissance</label>
+          <input type="text" class="form-control" id="power" name="power" ng-model="vm.car.power"
+                 required/>
+          <p ng-messages="vm.form.power.$error" class="help-block">
+            <span ng-message="required">Champ obligatoire</span>
+          </p>
+        </div>
+
+        <div class="form-group col-xs-8">
+          <label for="options" class="control-label">Options</label>
+          <tags-input id="options" name="options" ng-model="vm.car.options"
+                      placeholder="Ajouter une option" replace-spaces-with-dashes="false"
+                      ng-model-parser="vm.parseTags" ng-model-formatter="vm.formatTags">
+          </tags-input>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-xs-12">
+          <label for="observations" class="control-label">Observations</label>
       <textarea class="form-control" id="observations" name="observations" ng-model="vm.car.observations"
                 rows="6">
       </textarea>
-    </div>
-  </div>
+        </div>
+      </div>
 
-  <div class="row">
-    <div class="col-xs-12 text-right">
-      <button type="button" class="btn btn-default" ng-click="vm.resetForm()" ng-disabled="vm.form.$pristine">
-        Annuler
-      </button>
-      <button type="submit" class="btn btn-primary" ng-click="vm.submitForm()" ng-disabled="vm.form.$pristine">
-        Valider
-      </button>
+      <div class="row">
+        <div class="col-xs-12 text-right">
+          <button type="button" class="btn btn-default" ng-click="vm.resetForm()"
+                  ng-disabled="vm.form.$pristine || vm.uploading">
+            Annuler
+          </button>
+          <button type="submit" class="btn btn-primary" ng-click="vm.submitForm()"
+                  ng-disabled="vm.form.$pristine || vm.uploading">
+            Valider
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div ng-if="vm.car.id" class="panel panel-default">
+  <div class="panel-heading">
+    <h2>Photos</h2>
+  </div>
+  <div class="panel-body">
+    <div class="row dnd-list" dnd-list="vm.car.photos">
+      <div class="col-xs-6 col-sd-4 col-md-3 col-lg-2 dnd-item" ng-repeat="photo in vm.car.photos"
+           dnd-draggable="photo" dnd-moved="vm.onDropPhoto($index)" dnd-effect-allowed="move">
+        <a class="thumbnail" ng-click="vm.deletePhoto(photo)">
+          <img ng-src="/photos/{{ photo.small }}" alt="{{ photo.name }}"/>
+          <div class="hover">
+            <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-6 col-sd-4 col-md-3 col-lg-2 dndPlaceholder">
+        <span class="thumbnail">Drop</span>
+      </div>
+      <div class="col-xs-6 col-sd-4 col-md-3 col-lg-2 add-item">
+        <a ng-hide="vm.uploading" class="thumbnail" ngf-select="vm.addPhotos($files)" multiple="multiple">
+          <span>Ajouter des photos</span>
+        </a>
+        <span ng-show="vm.uploading" class="thumbnail">
+          <span>{{ vm.progress === 100 ? 'Sauvegarde en cours' : 'Upload en cours : ' + vm.progress + '%' }}</span>
+        </span>
+      </div>
     </div>
   </div>
-</form>
+</div>

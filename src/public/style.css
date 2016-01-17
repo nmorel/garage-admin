@@ -2,6 +2,10 @@ h1 {
   margin: 0 0 10px 0;
 }
 
+.panel-heading > h2 {
+  margin: 5px 0;
+}
+
 .navbar {
   margin-bottom: 10px;
 }
@@ -17,4 +21,55 @@ label.required::after {
 
 .form-group.has-error > .help-block {
   display: block;
+}
+
+.thumbnail {
+  height: 150px;
+  text-align: center;
+  line-height: 150px;
+  padding: 0;
+  position: relative;
+}
+
+.thumbnail > img {
+  display: inline;
+}
+
+.thumbnail > .hover {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: none;
+  line-height: normal;
+}
+
+.thumbnail:hover > .hover {
+  display: block;
+}
+
+.dnd-list,
+.dnd-item {
+  position: relative;
+}
+
+.dnd-item > .thumbnail:hover {
+  cursor: move;
+  border-style: dashed;
+}
+
+.dnd-item  {
+  cursor: move;
+}
+
+.dndDraggingSource {
+  display: none;
+}
+
+.dndPlaceholder > .thumbnail {
+  background-color: grey;
+  border-style: dashed;
+}
+
+.add-item > .thumbnail {
+  cursor: pointer;
 }
