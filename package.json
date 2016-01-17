@@ -7,6 +7,7 @@
     "bluebird": "^3.1.1",
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
+    "imagemagick-native": "git://github.com/mash/node-imagemagick-native.git",
     "minimist": "^1.2.0",
     "rimraf": "^2.5.0"
   },
