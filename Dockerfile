@@ -38,4 +38,7 @@ ENV PATH /home/nico/node/bin:$PATH
 # Update NPM
 RUN npm install -g npm
 
+RUN git config --global user.email "nmr.morel@gmail.com"
+RUN git config --global user.name "Nicolas Morel"
+
 EXPOSE 4000
