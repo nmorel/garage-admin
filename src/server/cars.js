@@ -23,6 +23,11 @@ function jsToString(jsObj) {
  * @returns {Promise} the promise
  */
 function saveCar(car) {
+  const date = new Date();
+  if (!car.creationDate) {
+    car.creationDate = date.toISOString();
+  }
+  car.modificationDate = date.toISOString();
   const file = path.join(carsFolder, car.id.toString(), 'data.json');
   return fs.writeFileAsync(file, jsToString(car));
 }
