@@ -4,7 +4,7 @@
   "description": "Partie back-office du site du garage",
   "scripts": {
     "server": "nodemon src/index.js --frontendFolder /home/nico/garage/front",
-    "debug": "nodemon --debug src/index.js --frontendFolder /home/nico/garage/front"
+    "debug": "BLUEBIRD_DEBUG=1 nodemon --debug src/index.js --frontendFolder /home/nico/garage/front"
   },
   "dependencies": {
     "bluebird": "^3.1.1",

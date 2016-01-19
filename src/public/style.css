@@ -2,6 +2,10 @@ h1 {
   margin: 0 0 10px 0;
 }
 
+.table>tbody>tr>td {
+  line-height: 34px;
+}
+
 .panel-heading > h2 {
   margin: 5px 0;
 }

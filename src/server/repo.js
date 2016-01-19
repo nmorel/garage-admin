@@ -42,7 +42,7 @@ app.post('/api/compile', (req, res, next) => {
  */
 app.post('/api/publish', (req, res, next) => {
   pull()
-    .then(() => execAsync('git add -A && git commit -m "Update data"'))
+    .then(() => execAsync('git add -A && git commit -m "Update data" && git push'))
     .then(() => res.sendStatus(200))
     .catch(next);
 });

@@ -12,6 +12,7 @@
       <th>Kilométrage</th>
       <th>Boîte</th>
       <th>Type d'essence</th>
+      <th>Prix</th>
       <th></th>
     </tr>
   </thead>
@@ -24,9 +25,10 @@
       <td>{{ car.mileage + ' km' }}</td>
       <td>{{ car.transmission }}</td>
       <td>{{ car.fuelType }}</td>
+      <td>{{ car.price + ' €' }}</td>
       <td>
         <button class="btn btn-danger" ng-click="$event.stopPropagation();vm.onDelete(car)">
-          <span><span class="glyphicon glyphicon-trash"></span> Supprimer</span>
+          <span class="glyphicon glyphicon-trash"></span>
         </button>
       </td>
     </tr>
