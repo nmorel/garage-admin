@@ -32,7 +32,7 @@ function pull() {
  */
 app.post('/api/compile', (req, res, next) => {
   pull()
-    .then(() => execAsync('git pull && ./node_modules/.bin/gulp build --publicPath /front/'))
+    .then(() => execAsync(`git pull && ./node_modules/.bin/gulp build --publicPath ${conf.context}front/`))
     .then(() => res.sendStatus(200))
     .catch(next);
 });

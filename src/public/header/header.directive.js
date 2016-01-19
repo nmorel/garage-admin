@@ -10,7 +10,7 @@
           scope.loading = true;
           restService.post('api/compile')
             .then(function () {
-              $window.open('http://localhost:4000/front/');
+              $window.open('front/');
               // Reloading state in case we pulled new modifications
               $state.go($state.current, {}, {
                 reload: true,
