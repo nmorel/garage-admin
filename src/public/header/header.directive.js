@@ -8,7 +8,7 @@
       link: function (scope) {
         scope.onVisu = function () {
           scope.loading = true;
-          restService.post('/api/compile')
+          restService.post('api/compile')
             .then(function () {
               $window.open('http://localhost:4000/front/');
               // Reloading state in case we pulled new modifications
@@ -26,7 +26,7 @@
 
         scope.onPublish = function () {
           scope.loading = true;
-          restService.post('/api/publish')
+          restService.post('api/publish')
             .then(function () {
               toaster.pop('success', 'Modifications publiées. Elles seront visibles dans quelques minutes.');
               // Reloading state in case we pulled new modifications

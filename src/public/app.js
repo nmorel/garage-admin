@@ -14,7 +14,7 @@ angular.module('app', ['ngAnimate', 'ngMessages', 'ui.router', 'ui.bootstrap', '
         controllerAs: 'vm',
         resolve: {
           cars: function (restService) {
-            return restService.get('/api/cars');
+            return restService.get('api/cars');
           },
         },
       })
@@ -36,7 +36,7 @@ angular.module('app', ['ngAnimate', 'ngMessages', 'ui.router', 'ui.bootstrap', '
         controllerAs: 'vm',
         resolve: {
           car: function (restService, $stateParams) {
-            return restService.get('/api/cars/' + $stateParams.id);
+            return restService.get('api/cars/' + $stateParams.id);
           },
         },
       });

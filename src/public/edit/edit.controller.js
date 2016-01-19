@@ -49,7 +49,7 @@
         $scope.$broadcast('show-errors-check-validity');
         if (vm.form.$valid) {
           if (vm.car.id) {
-            restService.put('/api/cars/' + vm.car.id, car)
+            restService.put('api/cars/' + vm.car.id, car)
               .then(function () {
                 toaster.pop('success', 'Modifications sauvegardées');
                 refreshCar();
@@ -57,7 +57,7 @@
                 toaster.pop('error', 'Erreur', 'Une erreur est survenue durant la modification');
               });
           } else {
-            restService.post('/api/cars', car)
+            restService.post('api/cars', car)
               .then(function (_car) {
                 toaster.pop('success', 'Voiture ajoutée');
                 $state.go('edit', {id: _car.id});
@@ -80,7 +80,7 @@
         return;
       }
 
-      restService.delete('/api/cars/' + vm.car.id + '/photos/' + photo.id)
+      restService.delete('api/cars/' + vm.car.id + '/photos/' + photo.id)
         .then(function () {
           toaster.pop('success', 'Photo supprimée');
           _.remove(vm.car.photos, function (_photo) {
@@ -95,7 +95,7 @@
       vm.uploading = true;
       vm.progress = 0;
       Upload.upload({
-          url: '/api/cars/' + vm.car.id + '/photos/',
+          url: 'api/cars/' + vm.car.id + '/photos/',
           data: {
             file: photos,
           },
@@ -116,7 +116,7 @@
 
     vm.onDropPhoto = function ($index) {
       vm.car.photos.splice($index, 1);
-      restService.put('/api/cars/' + vm.car.id, car)
+      restService.put('api/cars/' + vm.car.id, car)
         .then(function () {
           toaster.pop('success', 'Modifications sauvegardées');
           refreshCar();

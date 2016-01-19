@@ -12,8 +12,8 @@
     };
 
     vm.onDelete = function (car) {
-      $http.delete('/api/cars/' + car.id).success(function () {
-        $http.get('/api/cars').success(function (_cars) {
+      $http.delete('api/cars/' + car.id).success(function () {
+        $http.get('api/cars').success(function (_cars) {
           vm.cars = _cars;
         })
         .error(function(){
