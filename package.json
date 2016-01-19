@@ -2,7 +2,10 @@
   "name": "garage-admin",
   "version": "1.0.0",
   "description": "Partie back-office du site du garage",
-  "scripts": {},
+  "scripts": {
+    "server": "nodemon src/index.js --frontendFolder /home/nico/garage/front",
+    "debug": "nodemon --debug src/index.js --frontendFolder /home/nico/garage/front"
+  },
   "dependencies": {
     "bluebird": "^3.1.1",
     "body-parser": "^1.14.2",
@@ -17,6 +20,7 @@
   "devDependencies": {
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^3.1.0",
-    "jscs": "^2.7.0"
+    "jscs": "^2.7.0",
+    "nodemon": "^1.8.1"
   }
 }

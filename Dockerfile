@@ -22,7 +22,6 @@ RUN apt-get -qy update && \
 	    libmagick++-dev
 
 USER nico
-WORKDIR /home/nico
 
 # Install Node
 ENV NODE_VERSION 4.2.4
@@ -38,7 +37,15 @@ ENV PATH /home/nico/node/bin:$PATH
 # Update NPM
 RUN npm install -g npm
 
+# Volumes
+VOLUME /home/nico/garage/front
+VOLUME /home/nico/garage/admin
+WORKDIR /home/nico/garage/admin
+
+# Configure git
 RUN git config --global user.email "nmr.morel@gmail.com"
 RUN git config --global user.name "Nicolas Morel"
 
-EXPOSE 4000
+# Expose port
+EXPOSE 3000
+EXPOSE 5858

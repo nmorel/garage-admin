@@ -15,6 +15,17 @@ sudo docker run --rm \
 sudo docker run --rm \
   -v /home/nico/dev/projects/garage-admin:/home/nico/garage/admin \
   -v /home/nico/dev/projects/garage:/home/nico/garage/front \
-  -p 4000:4000 nas/garage \
-  node /home/nico/garage/admin/src/index.js --port 4000 --frontendFolder /home/nico/garage/front
+  --name garage-admin-run \
+  -p 3000:3000 nas/garage \
+  npm run server
+```
+
+## Debug
+```bash
+sudo docker run --rm \
+  -v /home/nico/dev/projects/garage-admin:/home/nico/garage/admin \
+  -v /home/nico/dev/projects/garage:/home/nico/garage/front \
+  --name garage-admin-debug \
+  -p 3000:3000 -p 5858:5858 nas/garage \
+  npm run debug
 ```
