@@ -81,7 +81,7 @@
 
         <div class="form-group col-xs-4" show-errors>
           <label for="price" class="control-label required">Prix (en €)</label>
-          <input type="text" class="form-control" id="price" name="price" ng-model="vm.car.price"
+          <input type="number" class="form-control" id="price" name="price" ng-model="vm.car.price"
                  required/>
           <p ng-messages="vm.form.price.$error" class="help-block">
             <span ng-message="required">Champ obligatoire</span>
