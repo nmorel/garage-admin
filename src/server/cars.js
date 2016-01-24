@@ -173,18 +173,19 @@ app.post('/api/cars/:id/photos', multipartMiddleware, (req, res, next) => {
         small: path.join('data/cars', req.params.id, fileId, fileId + '_small.jpg'),
         medium: path.join('data/cars', req.params.id, fileId, fileId + '_medium.jpg'),
         large: path.join('data/cars', req.params.id, fileId, fileId + '_large.jpg'),
+        verylarge: path.join('data/cars', req.params.id, fileId, fileId + '_verylarge.jpg'),
       };
 
       return fs.mkdirAsync(photoFolder)
         .then(() => fs.readFileAsync(file.path))
         .then((data) => {
-          const small = convertPhoto(data, result.small, 150);
-          const medium = convertPhoto(data, result.medium, 350);
-          const large = convertPhoto(data, result.large, 800);
-          return Promise.all([small, medium, large]);
+          const small = convertPhoto(data, result.small, 130);
+          const medium = convertPhoto(data, result.medium, 260);
+          const large = convertPhoto(data, result.large, 520);
+          const verylarge = convertPhoto(data, result.verylarge, 780);
+          return Promise.all([small, medium, large, verylarge]);
         })
-        .
-        then(() => fs.unlinkAsync(file.path))
+        .then(() => fs.unlinkAsync(file.path))
         .then(() => result);
     })
 
