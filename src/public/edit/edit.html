@@ -44,7 +44,7 @@
         <div class="form-group col-xs-4" show-errors>
           <label for="mileage" class="control-label required">Kilométrage (en km)</label>
           <input type="number" class="form-control" id="mileage" name="mileage" ng-model="vm.car.mileage"
-                 required/>
+                 required min="0"/>
           <p ng-messages="vm.form.mileage.$error" class="help-block">
             <span ng-message="required">Champ obligatoire</span>
           </p>
@@ -71,10 +71,19 @@
 
       <div class="row">
         <div class="form-group col-xs-4" show-errors>
-          <label for="power" class="control-label required">Puissance</label>
-          <input type="text" class="form-control" id="power" name="power" ng-model="vm.car.power"
-                 required/>
-          <p ng-messages="vm.form.power.$error" class="help-block">
+          <label for="powerReal" class="control-label required">Puissance réelle (en ch)</label>
+          <input type="number" class="form-control" id="powerReal" name="powerReal" ng-model="vm.car.powerReal"
+                 required min="0"/>
+          <p ng-messages="vm.form.powerReal.$error" class="help-block">
+            <span ng-message="required">Champ obligatoire</span>
+          </p>
+        </div>
+
+        <div class="form-group col-xs-4" show-errors>
+          <label for="powerFiscal" class="control-label required">Puissance fiscale (en cv)</label>
+          <input type="number" class="form-control" id="powerFiscal" name="powerFiscal" ng-model="vm.car.powerFiscal"
+                 required min="0"/>
+          <p ng-messages="vm.form.powerFiscal.$error" class="help-block">
             <span ng-message="required">Champ obligatoire</span>
           </p>
         </div>
@@ -82,7 +91,7 @@
         <div class="form-group col-xs-4" show-errors>
           <label for="price" class="control-label required">Prix (en €)</label>
           <input type="number" class="form-control" id="price" name="price" ng-model="vm.car.price"
-                 required/>
+                 required min="0"/>
           <p ng-messages="vm.form.price.$error" class="help-block">
             <span ng-message="required">Champ obligatoire</span>
           </p>
